@@ -6,26 +6,23 @@ document.addEventListener("DOMContentLoaded", function () {
             event.preventDefault();
 
             if (validateForm(form)) {
-                window.location.href = "dashboard.html";  // Redirect on success
+                window.location.href = "dashboard.html";  
             } else {
-                form.classList.add("was-validated");  // Show validation feedback
+                form.classList.add("was-validated");
             }
         });
     }
 
-    // Function to show alert
     function showAlert(message) {
         let alertBox = document.getElementById("customAlert");
         alertBox.innerHTML = `<strong>Warning!</strong> ${message} <button type="button" class="btn-close" onclick="closeAlert()"></button>`;
-        alertBox.classList.remove("d-none");  // Show alert
+        alertBox.classList.remove("d-none"); 
     }
 
-    // Function to close the alert
     function closeAlert() {
-        document.getElementById("customAlert").classList.add("d-none");  // Hide alert
+        document.getElementById("customAlert").classList.add("d-none");  
     }
 
-    // Validate the form and check password matching
     function validateForm(form) {
         let isValid = true;
         const inputs = form.querySelectorAll("input");
@@ -33,15 +30,14 @@ document.addEventListener("DOMContentLoaded", function () {
         inputs.forEach(input => {
             if (!input.checkValidity()) {
                 isValid = false;
-                input.classList.add("is-invalid");  // Add invalid class if invalid
-                input.classList.remove("is-valid");  // Remove valid class if invalid
+                input.classList.add("is-invalid");  
+                input.classList.remove("is-valid"); 
             } else {
-                input.classList.add("is-valid");  // Add valid class if valid
-                input.classList.remove("is-invalid");  // Remove invalid class if valid
+                input.classList.add("is-valid");  
+                input.classList.remove("is-invalid");  
             }
         });
 
-        // Additional password matching validation
         const password = form.querySelector("#password");
         const confirmPassword = form.querySelector("#confirmPassword");
 
@@ -50,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 isValid = false;
                 confirmPassword.classList.add("is-invalid");
                 confirmPassword.classList.remove("is-valid");
-                showAlert("Password fields do not match!");  // Show alert if passwords do not match
+                showAlert("Password fields do not match!");  
             } else {
                 confirmPassword.classList.add("is-valid");
                 confirmPassword.classList.remove("is-invalid");
@@ -60,7 +56,6 @@ document.addEventListener("DOMContentLoaded", function () {
         return isValid;
     }
 
-    // Real-time password validation (with immediate alert)
     const password = document.getElementById('password');
     const confirmPassword = document.getElementById('confirmPassword');
 
@@ -74,15 +69,16 @@ document.addEventListener("DOMContentLoaded", function () {
         if (password.value && confirmPassword.value && password.value === confirmPassword.value) {
             confirmPassword.classList.remove("is-invalid");
             confirmPassword.classList.add("is-valid");
-            closeAlert(); // Close the alert immediately when passwords match
+            closeAlert(); // alert close
         } else {
             confirmPassword.classList.remove("is-valid");
             confirmPassword.classList.add("is-invalid");
-            showAlert("Password fields do not match!"); // Show alert if passwords don't match
+            showAlert("Password fields do not match!"); // alert
         }
     }
 
-    // Automatically validate each input as the user types
+
+  // auto validation stuff
     const allInputs = document.querySelectorAll("input");
     allInputs.forEach(input => {
         input.addEventListener("input", function () {
@@ -96,3 +92,48 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+
+// starry sky stuff
+const canvas = document.getElementById("starsCanvas");
+        const ctx = canvas.getContext("2d");
+
+        let stars = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            createStars(100);
+        }
+
+        function createStars(count) {
+            stars = [];
+            for (let i = 0; i < count; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 2,
+                    brightness: Math.random(),
+                    speed: Math.random() * 0.02 + 0.005
+                });
+            }
+        }
+
+        function drawStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let star of stars) {
+                star.brightness += star.speed;
+                if (star.brightness > 1 || star.brightness < 0.2) {
+                    star.speed *= -1;
+                }
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${star.brightness})`;
+                ctx.fill();
+            }
+            requestAnimationFrame(drawStars);
+        }
+
+        resizeCanvas();
+        drawStars();
+        window.addEventListener("resize", resizeCanvas);

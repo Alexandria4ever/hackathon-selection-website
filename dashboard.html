@@ -18,6 +18,8 @@
 </head>
 <body>
 
+    <canvas id="starsCanvas"></canvas>
+
     <!-- Navbar -->
 
         <div class="container-fluid" id="nav">
@@ -68,16 +70,66 @@
             </div>
         </div>
     </div>
+    
+    <footer>
+        © 2025 Binary Bloom. All Rights Reserved.
+    </footer>
+    
 
     <!-- Bootstrap JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Logout Function -->
+
+
     <script>
         function logout() {
             window.location.href = "index.html"; // Redirect to login page
         }
+
+        const canvas = document.getElementById("starsCanvas");
+        const ctx = canvas.getContext("2d");
+
+        let stars = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            createStars(100);
+        }
+
+        function createStars(count) {
+            stars = [];
+            for (let i = 0; i < count; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 2,
+                    brightness: Math.random(), // Initial brightness
+                    speed: Math.random() * 0.02 + 0.005 // Different flicker speeds
+                });
+            }
+        }
+
+        function drawStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let star of stars) {
+                star.brightness += star.speed;
+                if (star.brightness > 1 || star.brightness < 0.2) {
+                    star.speed *= -1;
+                }
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${star.brightness})`;
+                ctx.fill();
+            }
+            requestAnimationFrame(drawStars);
+        }
+
+        resizeCanvas();
+        drawStars();
+        window.addEventListener("resize", resizeCanvas);
     </script>
+
 
 </body>
 </html>

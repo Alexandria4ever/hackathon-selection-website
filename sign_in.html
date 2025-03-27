@@ -31,27 +31,27 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Email</label>
-                    <input type="email" class="form-control" required>
+                    <input type="email" class="form-control" id="email" required>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Password</label>
-                    <input type="password" class="form-control" minlength="8" required>
+                    <input type="password" class="form-control" id="password" minlength="8" required>
                 </div>
             </div>
 
             <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary w-100">Sign-In</button>
+            <button type="submit" class="btn btn-primary w-100" id="subbtn">Sign-In</button>
 
             <!-- Row 4 (Google/Facebook log-in) -->
             <div class="row mt-4">
                 <div class="col-md-6 mb-2">
-                    <button type="button" onclick="window.location.href='dashboard.html';" class="btn btn-outline-danger w-100">
+                    <button type="button" onclick="window.location.href='dashboard.html';" class="btn btn-dark w-100">
                         <i class="bi bi-google me-2"></i> Sign up with Google
                     </button>
                 </div>
                 <div class="col-md-6 mb-2">
-                    <button type="button" onclick="window.location.href='dashboard.html';" class="btn btn-outline-danger w-100">
-                        <i class="bi bi-facebook me-2"></i> Sign up with Facebook
+                    <button type="button" onclick="window.location.href='dashboard.html';" class="btn btn-dark w-100">
+                        <i class="bi bi-facebook me-2"></i> Sign up with FB
                     </button>
                 </div>
             </div>
